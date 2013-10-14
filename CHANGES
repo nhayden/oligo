@@ -1,0 +1,248 @@
+### CHANGE log for package oligo ###
+
+12-8-2008: BC
+
+** added binary snr file for 50k,250k arrays (crlmm)
+
+** fixed pmPosition for NGS tiling
+
+12-6-2008: BC
+
+** read.celfiles was modified
+
+** added: checkValidPhenodataForFiles, createPhenodataFromIds, createDefaultMiame, checkChipTypes
+these helpers can (and will) be used for read.xysfiles
+
+Changes made by Matt Settles 12-4-2008
+
+** All changes should generally have effect on only Affy Tiling, ST and expression arrays.
+modifed read.celfiles to appear more like read.affybatch, should present a noticable change
+
+03-8-2009: BC
+
+** Copied rma2.c from Affy... API for RMA changed.
+
+** Added a basicRMA function in utils.R
+
+** Added an rma method for Exon arrays.
+
+** Changes previous rma method (originally for FeatureSet objs) to handle only ExpressionFeatureSet objects. The method is now in methods-ExpressionFeatureSet.R.
+
+** RMA for Exon: we summarize to the probeset level. The output, an ExpressionSet, contains in its featureData slot annotation for further processing (to the exon/gene-level)
+
+03-9-2009: BC - committed version 1.7.23
+
+** Added support for Gene ST Arrays (structure very similar to Exon)
+
+** Added RMA for Gene ST arrays. The only difference from RMA/Exon is the SQL query that includes an INNER JOIN to account for multiplicity (1:N mapping from probe to probeset). This is implemented in methods-GeneFeatureSet.R
+
+03-17-2009: BC - committed version 1.7.25
+
+** Modified rma method to extract information from pmfeature and bgfeature (bgfeature is assumed to contain PM probes only) tables. The qcpmfeature table will not be available for pdInfoBuilder objects on what I call 'version 2.0'.
+
+03-24-2009: B Carvalho - committed versioin 1.7.29
+
+** Several small changes to clean up package
+
+** Added TilingFeatureSet2, read.xysfiles2, read.celfiles2, getNgsColorInfo as an attempt to appropriately handle two colors applications of tiling arrays.
+
+03-25-2009: B Carvalho
+
+** Changes to accommodate sequence methods
+
+03-26-2009: B Carvalho
+
+** Improved NAMESPACE
+
+** Added basicRMA() to interface with RMA C-code
+
+04-02-2009: B Carvalho
+
+** Added affyio to parse CEL files. This is an initial attempt. 'affyio' provides a much faster parser and also allows users to read in CEL.gz files.
+
+04-06-2009: B Carvalho
+
+** list.celfiles() also returns .cel.gz files
+
+04-07-2009: B Carvalho
+
+** Cleaned up code.
+
+04-13-2009: B Carvalho
+
+** Changed read.table to read.delim in getCrlmmSummaries so filenames with white spaces do not break the code.
+
+04-16-2009: B Carvalho
+
+** Removed some unused code
+
+04-24-2009: B Carvalho
+
+** Added getContainer help page
+
+** Added more verbosity to read.xysfiles
+
+04-29-2009: B Carvalho
+
+** Fixed documentation for read.celfiles and read.xysfiles
+
+** Changed error message (when annotation cannot be loaded)
+
+05-07-2009: B Carvalho
+
+** Added C-code to parse XYS files
+
+05-09-2009: B Carvalho
+
+** Fixed sampleNames that was being ignored
+
+** Removed extra ordering for XYS files
+
+05-11-2009: B Carvalho
+
+** Fixed bug with getMetadata2: if user passes a phenoData object,
+this would be incorrectly combined with other objects because the
+sampleNames were different.
+
+05-21-2009: B Carvalho
+
+** Fixed bug with basicRMA.
+
+07-31-2009: B Carvalho
+
+** Fixed warnings at the C-level
+
+** More strict versions of dependencies
+
+08-05-2009: B Carvalho
+
+** Replaced require(annotation(obj)) by requireAnnotation(annotation(obj))
+
+08-06-2009: B Carvalho
+
+** RMA, for Exon and Gene arrays, is now possible to the gene-level
+
+08-14-2009: B Carvalho
+
+** Fixed image() for Affymetrix arrays
+
+08-18-2009: B Carvalho
+
+** Fixed and improved behavior of boxplot() for ExpressionSet and FeatureSet objects
+
+08-20-2009: B Carvalho
+
+** Added more details to the documentation associated to list.celfiles() and list.xysfiles()
+
+10-21-2009: B Carvalho
+
+** Fixed some probles in the vignettes
+
+11-09-2009: B Carvalho
+
+** removed rma_background2.c and rma_background2.h; preprocessCore is used instead.
+
+11-12-2009: B Carvalho
+
+** added rma() for quick and informal inspection of CNPs
+
+12-02-2009: B Carvalho - committed version 1.11.6
+
+** brought methods from oligoClasses
+
+12-03-2009: B Carvalho - committed version 1.11.8
+
+** brought documentation from oligoClasses
+
+12-06-2009: B Carvalho - committed version 1.11.10
+
+** removed se.exprs
+
+01-22-2010: B Carvalho - committed version 1.11.11
+
+** added support for large objects (via bigmemory)
+    read.celfiles / read.xysfiles / read.celfiles2 / read.xysfiles2
+** added support for parallel computing (via snow - requires bigmemory)
+** implemented backgroundCorrect for matrix and big.matrix
+** implemented normalize for matrix and big.matrix
+** implemented summarize for matrix and big.matrix
+** implemented rma workflow for big.matrix
+** removed doc for list.celfiles, which is now in oligoClasses
+** removed useAffyio argument from read.celfiles and read.celfiles2
+** now imports 'digest'
+** rma (expression) supports large objects and parallel computing
+** rma (exon/gene) supports large objects and parallel computing
+** added some diagnostic messages when package is attached
+   on large dataset and parallel computing support
+** added hooks for bigmemory/snow packages
+
+02-02-2010: B Carvalho - committed version 1.11.12
+
+** fixed bug in rma with big objects in which sample indices were
+   missing if user chose to skip background correction.
+
+02-11-2010: B Carvalho - v 1.11.14
+
+** exported pmChr
+** fixed .onAttach
+
+02-18-2010: B Carvalho - v 1.11.15
+
+** support to large datasets is now given through 'ff'
+** digest is no longer a dependency
+
+02-26-2010: B Carvalho - v 1.11.18
+
+** added darkColors and seqColors, which will interpolate along some
+   colors I like and generate a vector of length N to be used to set
+   colors when plotting
+** added plotM method for SnpSuperSet
+** added getAffinitySplineCoefficients (estimate affinity spline coefs) 
+   and getBaseProfile (estimate actual effect and optionally plot it)
+** added Hands-On vignette
+
+03-01-2010: B Carvalho - v 1.11.22
+
+** fixed vignette scheme
+** (x.y.20) fixed getFid*
+
+03-04-2010: B Carvalho - v 1.11.23
+
+** fixed format of NEWS
+** fixed NAMESPACE/DESCRIPTION: packages now in Imports
+** removed getMetadata(2) and other unused functions
+** added documentation to getBaseProfile and getAffinitySplineCoefficients.
+** removed reference to genDatasetUID (1.11.26)
+
+03-10-2010: B Carvalho - 1.11.29
+
+** moved some docs (cluster related) to oligoClasses
+
+03-11-2010: B Carvalho
+
+** (1.11.30) replaced oLapply by ocLapply(..., neededPkgs="oligo")
+** (1.11.31) got rid of sendBO2env
+
+03-22-2010: B Carvalho
+
+** (1.11.32) fixed probeNames for Gene/Exon arrays (Mikhail Pachkov)
+
+03-30-2010: B Carvalho
+
+** (1.11.33) fixed documentation to pass R CMD check
+
+04-06-2010: B Carvalho
+
+** (1.11.34) fixed check for getM on TilingFeatureSet
+             fixes for crlmm code (not to be seen by user, code rewrite)
+
+04-16-2010: B Carvalho
+
+** (1.11.36) changed getContainer to extract 'type' from (pm/bg)feature table
+** (1.11.38) approp. documented rma for gene/exon arrays
+
+05-05-2010: B Carvalho
+
+** (1.13.1) fixed bugs: image / bg / bgindex / pmChr / bgSequence for Gene and Exon arrays
+** (1.13.1) added support to gzipped XYS files
+** (1.13.3) fixed bugs with subsetting of Gene chips / docs
